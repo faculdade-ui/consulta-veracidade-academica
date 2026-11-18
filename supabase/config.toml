@@ -1,0 +1,6 @@
+project_id = "consulta-veracidade-academica"
+
+[functions.consulta-academica]
+# A função é pública; o endpoint faz validações e consulta somente com os 3 campos.
+# O segredo administrativo fica exclusivamente no ambiente da Edge Function.
+verify_jwt = false

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1222" />
+  <meta name="description" content="Consulta pública de veracidade acadêmica." />
+  <title>Consulta Pública de Veracidade Acadêmica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0b1222; --blue:#193f6b; --blue-hover:#123458; --ink:#183451; --muted:#53677f; --line:#d7e2f0; --pale:#eef5fc; --info:#eff6ff; --info-border:#c8ddff; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:Inter,Arial,sans-serif; color:var(--ink); background:linear-gradient(180deg,#e9f0f8 0%,#f2f6fb 100%); }
+    .hero { height:244px; padding:32px 22px 82px; background:linear-gradient(115deg,#080d1a 0%,#101a2d 100%); color:white; text-align:center; }
+    .brand-pill { display:inline-block; max-width:100%; padding:9px 16px; border-radius:999px; background:#fff; color:#53677f; font-size:13px; line-height:1.4; font-weight:700; }
+    h1 { margin:10px 0 12px; font-size:clamp(25px,3vw,34px); line-height:1.2; letter-spacing:-.7px; font-weight:800; }
+    .intro { max-width:900px; margin:0 auto; font-size:clamp(15px,1.6vw,19px); line-height:1.55; color:#f2f6fc; }
+    main { width:min(1118px,calc(100% - 36px)); margin:-34px auto 48px; position:relative; }
+    .panel { padding:22px; background:#fff; border:1px solid #e0e8f2; border-radius:28px; box-shadow:0 22px 48px rgba(24,54,89,.10); }
+    .fields { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:14px; align-items:end; }
+    label { display:block; margin:0 0 8px; color:#53677f; font-size:13px; font-weight:800; letter-spacing:.15px; }
+    input { width:100%; min-width:0; height:52px; border:1px solid var(--line); border-radius:15px; padding:0 14px; font:inherit; font-size:17px; color:#263d56; outline:none; background:#fbfdff; transition:border .15s,box-shadow .15s; }
+    input::placeholder { color:#858b94; }
+    input:focus { border-color:#244e7c; box-shadow:0 0 0 3px rgba(36,78,124,.13); }
+    button { height:46px; padding:0 20px; border:0; border-radius:17px; background:var(--blue); color:#fff; font:700 15px Inter,Arial,sans-serif; cursor:pointer; box-shadow:0 8px 18px rgba(25,63,107,.16); transition:background .15s,transform .15s; white-space:nowrap; }
+    button:hover { background:var(--blue-hover); }
+    button:active { transform:translateY(1px); }
+    button:disabled { opacity:.65; cursor:wait; }
+    .notice { display:flex; align-items:flex-start; gap:12px; margin-top:16px; padding:16px 18px; border:1px solid var(--info-border); border-radius:21px; background:var(--info); color:#29496d; font-size:15px; line-height:1.35; }
+    .info-icon { flex:0 0 21px; width:21px; height:21px; display:grid; place-items:center; border:2px solid #29496d; border-radius:50%; font-size:13px; font-weight:800; margin-top:1px; }
+    #feedback { margin-top:18px; }
+    .message { border-radius:16px; padding:16px 18px; font-size:14px; line-height:1.5; }
+    .message.error { background:#fff1f1; border:1px solid #f5c7c7; color:#8c2424; }
+    .message.neutral { background:#f3f6fa; border:1px solid #dce5ef; color:#41566e; }
+    .result { overflow:hidden; border:1px solid #dbe5f0; border-radius:18px; background:#fff; }
+    .result-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:17px 18px; background:#f7faff; border-bottom:1px solid #e2eaf4; }
+    .result-head h2 { margin:0; font-size:17px; }
+    .status { display:inline-flex; align-items:center; gap:7px; border-radius:999px; padding:7px 11px; font-size:12px; font-weight:800; white-space:nowrap; }
+    .status.valid { color:#17633b; background:#e7f7ed; }
+    .status.cancelled { color:#8a2929; background:#ffeded; }
+    .status.other { color:#78520c; background:#fff4d8; }
+    .result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .item { padding:15px 18px; border-bottom:1px solid #edf1f6; min-width:0; }
+    .item:nth-child(odd) { border-right:1px solid #edf1f6; }
+    .item .k { display:block; margin-bottom:5px; font-size:11px; font-weight:800; color:#697d93; text-transform:uppercase; letter-spacing:.5px; }
+    .item .v { overflow-wrap:anywhere; font-size:15px; font-weight:600; color:#213c5a; }
+    .footnote { margin:22px 0 0; color:#718197; text-align:center; font-size:12px; line-height:1.5; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media(max-width:900px) { .fields { grid-template-columns:repeat(2,minmax(0,1fr)); } .fields button { width:100%; height:52px; } }
+    @media(max-width:560px) { .hero { height:auto; min-height:250px; padding:26px 18px 65px; } main { width:calc(100% - 22px); margin-top:-34px; } .panel { padding:16px; border-radius:23px; } .fields { grid-template-columns:1fr; gap:13px; } input { font-size:16px; } .notice { padding:14px; font-size:13px; border-radius:17px; } .result-grid { grid-template-columns:1fr; } .item:nth-child(odd) { border-right:0; } .result-head { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="brand-pill" id="institution">Faculdades Integradas Ipitanga — FACIIP · Veracidade Acadêmica</div>
+    <h1>Consulta Pública de Veracidade Acadêmica</h1>
+    <p class="intro">Ambiente público para conferência de registros acadêmicos e documentos emitidos. O CPF pode ser usado para localizar o registro, mas a consulta exige os dados de conferência e o código único de veracidade.</p>
+  </header>
+  <main>
+    <section class="panel" aria-label="Formulário de consulta">
+      <form id="lookupForm" novalidate>
+        <div class="fields">
+          <div>
+            <label for="cpf">CPF DO ALUNO</label>
+            <input id="cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14" required aria-describedby="privacyNotice" />
+          </div>
+          <div>
+            <label for="matricula">MATRÍCULA</label>
+            <input id="matricula" name="matricula" type="text" autocomplete="off" placeholder="Informe a matrícula" maxlength="80" required />
+          </div>
+          <div>
+            <label for="codigo">CÓDIGO DE VERACIDADE</label>
+            <input id="codigo" name="codigo" type="text" autocomplete="off" placeholder="DOC-... ou REG-..." maxlength="120" required />
+          </div>
+          <button id="submitButton" type="submit">Consultar</button>
+        </div>
+      </form>
+      <div class="notice" id="privacyNotice" role="note">
+        <span class="info-icon" aria-hidden="true">i</span>
+        <span>Para proteger os dados acadêmicos, a consulta exige a combinação dos dados informados. O sistema retorna somente as informações necessárias para a conferência do registro ou documento. Não compartilhe seu CPF nem o código de veracidade publicamente.</span>
+      </div>
+      <div id="feedback" aria-live="polite" aria-atomic="true"></div>
+    </section>
+    <p class="footnote">Consulta pública de veracidade acadêmica · As informações exibidas dependem do registro mantido pela instituição emissora.</p>
+  </main>
+  <script>
+    /* CONFIGURE estes dois valores com os dados públicos do seu projeto Supabase.
+       Nunca coloque a chave secret/service_role neste arquivo. */
+    const SUPABASE_URL = 'https://iqvyzjilwnaneixmlner.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_12BNc4G37WK5VNDJmRqMTQ_-krecGsj';
+    const FUNCTION_NAME = 'consulta-academica';
+
+    const form = document.getElementById('lookupForm');
+    const cpfInput = document.getElementById('cpf');
+    const submitButton = document.getElementById('submitButton');
+    const feedback = document.getElementById('feedback');
+
+    function digits(value) { return value.replace(/\D/g, ''); }
+    function formatCpf(value) {
+      const d = digits(value).slice(0, 11);
+      return d.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1-$2');
+    }
+    function validCpf(value) {
+      const cpf = digits(value);
+      if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+      let sum = 0;
+      for (let i = 0; i < 9; i++) sum += Number(cpf[i]) * (10 - i);
+      let d1 = (sum * 10) % 11; if (d1 === 10) d1 = 0;
+      if (d1 !== Number(cpf[9])) return false;
+      sum = 0;
+      for (let i = 0; i < 10; i++) sum += Number(cpf[i]) * (11 - i);
+      let d2 = (sum * 10) % 11; if (d2 === 10) d2 = 0;
+      return d2 === Number(cpf[10]);
+    }
+    cpfInput.addEventListener('input', () => { cpfInput.value = formatCpf(cpfInput.value); });
+
+    function showMessage(text, type = 'neutral') {
+      feedback.replaceChildren();
+      const box = document.createElement('div');
+      box.className = `message ${type}`;
+      box.textContent = text;
+      feedback.appendChild(box);
+    }
+    function field(label, value) {
+      const item = document.createElement('div'); item.className = 'item';
+      const k = document.createElement('span'); k.className = 'k'; k.textContent = label;
+      const v = document.createElement('span'); v.className = 'v'; v.textContent = value || 'Não informado';
+      item.append(k, v); return item;
+    }
+    function showResult(data) {
+      feedback.replaceChildren();
+      const card = document.createElement('section'); card.className = 'result';
+      const head = document.createElement('div'); head.className = 'result-head';
+      const title = document.createElement('h2'); title.textContent = 'Resultado da consulta';
+      const status = document.createElement('span');
+      const rawStatus = String(data.status || '').toLowerCase();
+      const valid = rawStatus === 'valido';
+      const cancelled = rawStatus === 'cancelado' || rawStatus === 'cancelada';
+      status.className = `status ${valid ? 'valid' : cancelled ? 'cancelled' : 'other'}`;
+      status.textContent = valid ? '✓ Documento válido' : cancelled ? '! Documento cancelado' : '⚠ ' + (data.status_label || 'Situação requer conferência');
+      head.append(title, status);
+      const grid = document.createElement('div'); grid.className = 'result-grid';
+      grid.append(
+        field('Nome do aluno', data.nome_aluno),
+        field('Matrícula', data.matricula),
+        field('Curso', data.curso),
+        field('Documento', data.tipo_documento),
+        field('Código de veracidade', data.codigo_veracidade),
+        field('Data de emissão', data.data_emissao),
+        field('Situação do registro', data.status_label || data.status),
+        field('Observação', data.observacao_publica)
+      );
+      card.append(head, grid); feedback.appendChild(card);
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const cpf = digits(cpfInput.value);
+      const matricula = document.getElementById('matricula').value.trim();
+      const codigo = document.getElementById('codigo').value.trim();
+      if (!validCpf(cpf)) { showMessage('Informe um CPF válido.', 'error'); cpfInput.focus(); return; }
+      if (!matricula || !codigo) { showMessage('Preencha a matrícula e o código de veracidade.', 'error'); return; }
+      if (SUPABASE_URL.includes('COLE_AQUI') || SUPABASE_PUBLISHABLE_KEY.includes('COLE_AQUI')) {
+        showMessage('A página ainda não está configurada. Insira a URL e a chave publicável do seu projeto Supabase no arquivo index.html.', 'error'); return;
+      }
+      submitButton.disabled = true; submitButton.textContent = 'Consultando…';
+      showMessage('Consultando o registro acadêmico…');
+      try {
+        const response = await fetch(`${SUPABASE_URL.replace(/\/$/, '')}/functions/v1/${FUNCTION_NAME}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_PUBLISHABLE_KEY },
+          body: JSON.stringify({ cpf, matricula, codigo })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (response.status === 404 || payload.code === 'NOT_FOUND') {
+          showMessage('Não foi possível confirmar um registro com os dados informados. Confira os campos e tente novamente.', 'error');
+        } else if (!response.ok) {
+          showMessage(payload.error || 'Não foi possível concluir a consulta agora. Tente novamente mais tarde.', 'error');
+        } else if (payload.found && payload.record) {
+          showResult(payload.record);
+        } else {
+          showMessage('Não foi possível confirmar um registro com os dados informados. Confira os campos e tente novamente.', 'error');
+        }
+      } catch (error) {
+        showMessage('Falha de conexão. Verifique sua internet e tente novamente.', 'error');
+      } finally {
+        submitButton.disabled = false; submitButton.textContent = 'Consultar';
+      }
+    });
+  </script>
+</body>
+</html>
